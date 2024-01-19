@@ -9,7 +9,7 @@ import (
 
 
 var (
-	httpRouter 		router.Router		= router.NewMuxRouter()
+	httpRouter 		router.Router		= router.NewGinRouter()
 )
 
 func main(){
