@@ -1,0 +1,4 @@
+github.com/go-chi/chi v1.5.5 h1:vOB/HbEMt9QqBqErz07QehcOKHaWFtuj87tTDVz2qXE=
+github.com/go-chi/chi v1.5.5/go.mod h1:C9JqLr3tIYjDOZpzn+BCuxY8z8vmca43EeMgyZt7irw=
+github.com/go-mux/mux v1.0.0 h1:cjme5KED7XU2D1XPqfepZpr/ouRoa8St5/Q1Wn5/K7s=
+github.com/go-mux/mux v1.0.0/go.mod h1:WycrREmM6C8dXy3aKkr8IQ1XwEqXSsQUm1Hyvs8X0Co=
