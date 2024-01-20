@@ -1,8 +1,13 @@
 package repository
 
-import "github.com/salimmia/go-architecture/internal/models"
+import (
+	"github.com/google/uuid"
+	"github.com/salimmia/go-architecture/internal/models"
+)
 
 type Database interface{
-	GetAllUsers() error
-	CreateUser(user *models.User) error
+	RegistrationUser(user *models.User) (*models.UserID, error)
+	UpdateUser(user *models.User) (*models.User, error)
+	GetUserById(userId uuid.UUID) (*models.User, error)
+	GetUserByEmail(email string) (*models.User, error)
 }

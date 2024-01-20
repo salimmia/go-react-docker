@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net/http"
 
 	"github.com/salimmia/go-architecture/internal/application"
 	"github.com/salimmia/go-architecture/internal/config"
@@ -25,12 +23,15 @@ func main(){
 		return
 	}
 
+	// log.Println(&app.HTTPRouter)
+
 	repo := controller.NewRepository(app, db)
 	controller.NewHandler(repo)
 
-	app.HTTPRouter.GET("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "up and running")
-	})
+	router := app.HTTPRouter
+	router.POST("/users/register", controller.Repo.RegistrationUser)
+	router.POST("/users/update-user/{user_id}", controller.Repo.UpdateUser)
+	router.POST("/users/login", controller.Repo.LogIn)
 
-	app.HTTPRouter.SERVE(app.Config.ServerPort)
+	router.SERVE(app.Config.ServerPort)
 }

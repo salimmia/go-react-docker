@@ -31,6 +31,12 @@ func (r *ginRouter) POST(uri string, f func (w http.ResponseWriter, r *http.Requ
 	})
 }
 
+func (r *ginRouter) PUT(uri string, f func (w http.ResponseWriter, r *http.Request)){
+	r.Engine.PUT(uri, func(ctx *gin.Context) {
+		f(ctx.Writer, ctx.Request)
+	})
+}
+
 func (r *ginRouter) SERVE(port string){
 	fmt.Printf("Gin HTTP server running on port %v\n", port)
 

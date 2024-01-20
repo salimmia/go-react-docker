@@ -16,6 +16,6 @@ type Application struct {
 func NewApplication(config *config.AppConfig) *Application {
 	return &Application{
 		Config:          config,
-		HTTPRouter:      https.NewMuxRouter(), // or router.NewChiRouter(), or router.NewMuxRouter()
+		HTTPRouter:      https.NewChiRouter(), // or router.NewChiRouter(), or router.NewMuxRouter()
 	}
 }
