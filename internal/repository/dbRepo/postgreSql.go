@@ -3,16 +3,19 @@ package dbrepo
 import (
 	"database/sql"
 
+	"github.com/salimmia/go-architecture/internal/application"
 	"github.com/salimmia/go-architecture/internal/models"
 	"github.com/salimmia/go-architecture/internal/repository"
 )
 
 type postgreSqlDbRepo struct{
+	App *application.Application
 	DB *sql.DB
 }
 
-func NewPostgreSqlDbRepo(db *sql.DB) repository.Repository{
+func NewPostgreSqlDbRepo(app *application.Application, db *sql.DB) repository.Database{
 	return &postgreSqlDbRepo{
+		App: app,
 		DB: db,
 	}
 }
