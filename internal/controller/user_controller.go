@@ -3,27 +3,24 @@ package controller
 import (
 	"net/http"
 
-	"github.com/salimmia/go-architecture/internal/usecase"
+	"github.com/gin-gonic/gin"
 )
 
 // UserController handles HTTP requests related to users.
-type UserController struct {
-    userUseCase usecase.UserUseCase
-}
+type UserController struct {}
 
 // NewUserController creates a new instance of UserController.
-func NewUserController(userUseCase usecase.UserUseCase) *UserController {
-    return &UserController{
-        userUseCase: userUseCase,
-    }
+func NewUserController() *UserController {
+    return &UserController{}
 }
 
 // CreateUser handles the creation of a new user.
-func (uc *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
+func (uc *UserController) CreateUser(context *gin.Context) {
     // Implementation of creating a user
+    context.JSON(http.StatusOK, gin.H{"message": "successfully done"})
 }
 
 // GetAllUsers handles the retrieval of all users.
-func (uc *UserController) GetAllUsers(w http.ResponseWriter, r *http.Request) {
+func (uc *UserController) GetAllUsers(context *gin.Context) {
     // Implementation of retrieving all users
 }

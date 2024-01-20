@@ -1,25 +1,24 @@
 package application
 
 import (
+	"github.com/salimmia/go-architecture/internal/config"
+	"github.com/salimmia/go-architecture/internal/controller"
+	"github.com/salimmia/go-architecture/internal/delivery/https"
 	"github.com/salimmia/go-architecture/internal/router"
-	"github.com/salimmia/go-architecture/internal/usecase"
 )
 
 // Application represents the main application.
 type Application struct {
-    httpRouter   router.Router
-    userUseCase  usecase.UserUseCase
+	Config          *config.AppConfig
+	UserController  *controller.UserController
+	HTTPRouter      router.Router
 }
 
-// NewApplication creates a new instance of the Application.
-func NewApplication(httpRouter router.Router, userUseCase usecase.UserUseCase) *Application {
-    return &Application{
-        httpRouter:  httpRouter,
-        userUseCase: userUseCase,
-    }
-}
-
-// Run starts the application.
-func (app *Application) Run(port string) {
-	
+// NewApplication creates a new instance of the Application with the given configuration.
+func NewApplication(config *config.AppConfig) *Application {
+	return &Application{
+		Config:          config,
+		UserController:  controller.NewUserController(),
+		HTTPRouter:      https.NewGinRouter(), // or router.NewChiRouter(), or router.NewMuxRouter()
+	}
 }
