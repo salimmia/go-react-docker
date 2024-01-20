@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
-	router "github.com/salimmia/go-architecture/http"
+	"github.com/salimmia/go-architecture/internal/delivery/https"
+	"github.com/salimmia/go-architecture/internal/router"
 )
 
 
 var (
-	httpRouter 		router.Router		= router.NewGinRouter()
+	httpRouter 		router.Router		= https.NewGinRouter()
 )
 
 func main(){

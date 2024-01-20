@@ -1,10 +1,11 @@
-package router
+package https
 
 import (
 	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi"
+	"github.com/salimmia/go-architecture/internal/router"
 )
 
 
@@ -14,7 +15,7 @@ var (
 	chiDispatcher = chi.NewRouter()
 )
 
-func NewChiRouter() Router{
+func NewChiRouter() router.Router {
 	return &chiRouter{}
 }
 

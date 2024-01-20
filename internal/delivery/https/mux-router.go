@@ -1,10 +1,11 @@
-package router
+package https
 
 import (
 	"fmt"
 	"net/http"
 
 	"github.com/go-mux/mux"
+	"github.com/salimmia/go-architecture/internal/router"
 )
 
 
@@ -14,7 +15,7 @@ var (
 	muxDispatcher = mux.NewRouter()
 )
 
-func NewMuxRouter() Router{
+func NewMuxRouter() router.Router{
 	return &muxRouter{}
 }
 
