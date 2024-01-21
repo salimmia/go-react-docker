@@ -14,8 +14,19 @@ type Application struct {
 
 // NewApplication creates a new instance of the Application with the given configuration.
 func NewApplication(config *config.AppConfig) *Application {
+	var router router.Router
+
+	switch config.Router{
+	case "mux":
+		router = https.NewMuxRouter()
+	case "gin":
+		router = https.NewGinRouter()
+	default:
+		router = https.NewChiRouter()
+	}
+
 	return &Application{
 		Config:          config,
-		HTTPRouter:      https.NewChiRouter(), // or router.NewChiRouter(), or router.NewMuxRouter()
+		HTTPRouter:   	router, // or router.NewChiRouter(), or router.NewMuxRouter()
 	}
 }

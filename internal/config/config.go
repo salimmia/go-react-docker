@@ -25,6 +25,7 @@ type AppConfig struct {
 	EnableDebugLogs    	bool   	`json:"enable_debug_logs"`
 	EnableTLS          	bool   	`json:"enable_tls"`
 	EnableEmailSending 	bool   	`json:"enable_email_sending"`
+	Router				string	`json:"router"`
 }
 
 // NewAppConfig creates a new instance of AppConfig with default values.
@@ -61,5 +62,6 @@ func NewAppConfig() (*AppConfig, error) {
 		EnableDebugLogs:    true,
 		EnableTLS:          true,
 		EnableEmailSending: true,
+		Router: 			os.Getenv("HTTPRouter"),
 	}, nil
 }
