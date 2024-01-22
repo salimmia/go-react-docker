@@ -7,5 +7,6 @@ type Router interface{
 	GET(uri string, f func (w http.ResponseWriter, r *http.Request))
 	POST(uri string, f func (w http.ResponseWriter, r *http.Request))
 	PUT(uri string, f func (w http.ResponseWriter, r *http.Request))
+	USE(middleware func(http.Handler) http.Handler)
 	SERVE(port string)
 }

@@ -134,7 +134,7 @@ func (app *PostgresRepo) GetUserByEmail(email string) (*models.User, error){
 		&userProfile.ID,
 		&userProfile.UserID,
 		&userProfile.PhoneNumber,
-		&userProfile.BirthDate.Time,
+		&userProfile.BirthDate,
 	)
 
 	if err != nil {

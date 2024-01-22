@@ -1,4 +1,4 @@
-include .env
+include ./backend/.env
 
 postgres:
 	docker run --name postgres16 -e POSTGRES_USER=$(DB_USER) -e POSTGRES_PASSWORD=$(DB_PASSWORD) -p 5432:5432 --network event-net -v pgdata:/var/lib/postgresql/data -d --rm postgres:16.1-alpine

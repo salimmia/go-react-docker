@@ -9,29 +9,35 @@ import (
 )
 
 
-type chiRouter struct{}
+type ChiRouter struct{
+	Router chi.Router
+}
 
 var (
 	chiDispatcher = chi.NewRouter()
 )
 
 func NewChiRouter() router.Router {
-	return &chiRouter{}
+	return &ChiRouter{chi.NewRouter()}
 }
 
-func (*chiRouter) GET(uri string, f func (w http.ResponseWriter, r *http.Request)){
-	chiDispatcher.Get(uri, f)
+func (c *ChiRouter) USE(middleware func(http.Handler) http.Handler) {
+	c.Router.Use(middleware)
 }
 
-func (*chiRouter) POST(uri string, f func (w http.ResponseWriter, r *http.Request)){
-	chiDispatcher.Post(uri, f)
+func (c *ChiRouter) GET(uri string, f func (w http.ResponseWriter, r *http.Request)){
+	c.Router.Get(uri, f)
 }
 
-func (*chiRouter) PUT(uri string, f func (w http.ResponseWriter, r *http.Request)){
-	chiDispatcher.Post(uri, f)
+func (c *ChiRouter) POST(uri string, f func (w http.ResponseWriter, r *http.Request)){
+	c.Router.Post(uri, f)
 }
 
-func (*chiRouter) SERVE(port string){
+func (c *ChiRouter) PUT(uri string, f func (w http.ResponseWriter, r *http.Request)){
+	c.Router.Post(uri, f)
+}
+
+func (c *ChiRouter) SERVE(port string){
 	fmt.Printf("Chi HTTP server running on port %v\n", port)
-	http.ListenAndServe(port, chiDispatcher)
+	http.ListenAndServe(port, c.Router)
 }

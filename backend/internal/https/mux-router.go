@@ -19,6 +19,10 @@ func NewMuxRouter() router.Router{
 	return &muxRouter{}
 }
 
+func (c *muxRouter) USE(middleware func(http.Handler) http.Handler) {
+	c.USE(middleware)
+}
+
 func (*muxRouter) GET(uri string, f func (w http.ResponseWriter, r *http.Request)){
 	muxDispatcher.HandleFunc(uri, f).Methods("GET")
 }

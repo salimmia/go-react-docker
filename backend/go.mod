@@ -5,6 +5,7 @@ go 1.21.1
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-chi/chi v1.5.5
+	github.com/go-chi/cors v1.2.1
 	github.com/go-mux/mux v1.0.0
 	github.com/go-pg/pg v8.0.7+incompatible
 	github.com/golang-jwt/jwt/v5 v5.2.0

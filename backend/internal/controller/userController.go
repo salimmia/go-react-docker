@@ -16,9 +16,9 @@ import (
 
 func (m *Repository) RegistrationUser(w http.ResponseWriter, r *http.Request){
 	var input struct {
-        Email     string `json:"email"`
         FirstName string `json:"first_name"`
         LastName  string `json:"last_name"`
+		Email     string `json:"email"`
         Password  string `json:"password"`
     }
 	

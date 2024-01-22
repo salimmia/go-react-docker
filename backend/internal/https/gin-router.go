@@ -19,6 +19,10 @@ func NewGinRouter() router.Router {
 	}
 }
 
+func (c *ginRouter) USE(middleware func(http.Handler) http.Handler) {
+	c.USE(middleware)
+}
+
 func (r *ginRouter) GET(uri string, f func (w http.ResponseWriter, r *http.Request)){
 	r.Engine.GET(uri, func(ctx *gin.Context) {
 		f(ctx.Writer, ctx.Request)

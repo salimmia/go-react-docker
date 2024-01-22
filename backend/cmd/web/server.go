@@ -1,11 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"net/http"
 
+	"github.com/go-chi/chi"
 	"github.com/salimmia/go-architecture/internal/application"
 	"github.com/salimmia/go-architecture/internal/config"
 	"github.com/salimmia/go-architecture/internal/controller"
+	"github.com/salimmia/go-architecture/internal/middlewares"
 	"github.com/salimmia/go-architecture/internal/repository"
 )
 
@@ -28,10 +32,18 @@ func main(){
 	repo := controller.NewRepository(app, db)
 	controller.NewHandler(repo)
 
-	router := app.HTTPRouter
-	router.POST("/users/register", controller.Repo.RegistrationUser)
-	router.POST("/users/update-user/{user_id}", controller.Repo.UpdateUser)
-	router.POST("/users/login", controller.Repo.LogIn)
+	// router := app.HTTPRouter
+	// router.Use(middleware.Heartbeat("/users/register"))
 
-	router.SERVE(app.Config.ServerPort)
+	router := chi.NewRouter()
+	router.Use(middlewares.CorsMiddleware)
+
+
+	router.Post("/users/register", controller.Repo.RegistrationUser)
+	router.Post("/users/update-user/{user_id}", controller.Repo.UpdateUser)
+	router.Post("/users/login", controller.Repo.LogIn)
+
+	// router.(app.Config.ServerPort)
+	fmt.Printf("Chi HTTP server running on port %v\n", app.Config.ServerPort)
+	http.ListenAndServe(":8080", router)
 }
