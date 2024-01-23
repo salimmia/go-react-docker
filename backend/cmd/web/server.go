@@ -47,5 +47,5 @@ func main(){
 
 	// router.(app.Config.ServerPort)
 	fmt.Printf("Chi HTTP server running on port %v\n", app.Config.ServerPort)
-	http.ListenAndServe(":8080", router)
+	http.ListenAndServe(app.Config.ServerPort, router)
 }
