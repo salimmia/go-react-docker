@@ -40,7 +40,7 @@ func main(){
 
 
 	router.Post("/users/register", controller.Repo.RegistrationUser)
-	router.Post("/users/update-user/{user_id}", controller.Repo.UpdateUser)
+	router.Put("/users/update-user/{user_id}", controller.Repo.UpdateUser)
 	router.Post("/users/login", controller.Repo.LogIn)
 	router.Get("/users", controller.Repo.Users)
 
