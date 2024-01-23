@@ -24,26 +24,18 @@ const Home = () => {
   };
 
   return (
-    <div className="container-fluid p-0">
-      <div
-        style={{
-          backgroundImage:
-            "linear-gradient(#00d5ff,#0095ff,rgba(93,0,255,.555))",
-        }}
-        className="d-flex flex-column justify-content-center align-items-center text-center min-vh-100"
-      >
-        <h1 className="text-light">Login Success Page</h1>
-        <Link to="/users/login" className="btn btn-light my-5">
-          Logout
-        </Link>
-        <button className="btn btn-light my-1" onClick={getAllUsers}>
-          Get All Users
-        </button>
-        <h1 className="text-light mb-4">User Information</h1>
+    <div className="container">
+      <header>
+        <h1>Login Success Page</h1>
+        <Link to="/users/login">Logout</Link>
+      </header>
+      <main>
+        <button onClick={getAllUsers}>Get All Users</button>
+        <h2>User Information</h2>
         <div className="row">
           {userData.map((user) => (
             <div key={user.id} className="col-md-6">
-              <div className="card mb-4">
+              <div className="card">
                 <div className="card-body">
                   <h5 className="card-title">
                     {user.first_name} {user.last_name}
@@ -52,23 +44,26 @@ const Home = () => {
                     <strong>Email:</strong> {user.email}
                   </p>
                   <p className="card-text">
-                    <strong>Phone:</strong> {user.profile.phone_number}
+                    <strong>Phone:</strong>{" "}
+                    {user.profile?.phone_number || "N/A"}
                   </p>
                   <p className="card-text">
                     <strong>Birth Date:</strong>{" "}
-                    {user.profile.birth_date
+                    {user.profile?.birth_date
                       ? user.profile.birth_date.substring(0, 10)
-                      : ""}
+                      : "N/A"}
                   </p>
                   <p className="card-text">
                     <strong>User Name:</strong> {user.thumbnail}
                   </p>
+                  {/* Add a link to the user's profile */}
+                  <Link to={`/users/profile/${user.id}`}>View Profile</Link>
                 </div>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </main>
     </div>
   );
 };

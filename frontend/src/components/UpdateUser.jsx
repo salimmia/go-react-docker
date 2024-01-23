@@ -18,7 +18,9 @@ const UpdateUser = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/users/${userId}`);
+      const response = await axios.get(
+        `http://localhost:8080/users/profile/${userId}`
+      );
       const user = response.data;
 
       setFormData({
@@ -43,10 +45,11 @@ const UpdateUser = () => {
 
     try {
       await axios.put(
-        `http://localhost:8080/users/update-user/${userId}`,
+        `http://localhost:8080/users/profile/update-user/${userId}`,
         formData
       );
       console.log("User updated successfully");
+      alert("User updated successfully");
       // You may want to redirect or show a success message here
     } catch (error) {
       console.error("Error updating user:", error);
