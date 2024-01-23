@@ -43,6 +43,7 @@ func main(){
 	router.Put("/users/update-user/{user_id}", controller.Repo.UpdateUser)
 	router.Post("/users/login", controller.Repo.LogIn)
 	router.Get("/users", controller.Repo.Users)
+	router.Get("/users/{user_id}", controller.Repo.User)
 
 	// router.(app.Config.ServerPort)
 	fmt.Printf("Chi HTTP server running on port %v\n", app.Config.ServerPort)

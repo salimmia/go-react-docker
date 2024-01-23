@@ -52,7 +52,7 @@ const Home = () => {
                     <strong>Email:</strong> {user.email}
                   </p>
                   <p className="card-text">
-                    <strong>Phone:</strong> {user.phone_number}
+                    <strong>Phone:</strong> {user.profile.phone_number}
                   </p>
                   <p className="card-text">
                     <strong>Birth Date:</strong>{" "}

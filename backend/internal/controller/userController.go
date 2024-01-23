@@ -168,3 +168,26 @@ func (m *Repository) Users(w http.ResponseWriter, r *http.Request){
 
 	helpers.WriteJSON(w, http.StatusOK, users, nil)
 }
+
+func (m *Repository) User(w http.ResponseWriter, r *http.Request){
+	var userId models.UserID
+	idParam := chi.URLParam(r, "user_id")
+
+	id, err := uuid.Parse(idParam)
+	if err != nil{
+		http.Error(w, "could not parse user_id", http.StatusBadRequest)
+		return
+	}
+	
+	userId.Id = id
+	user, err := m.DB.GetUserById(userId.Id)
+
+	// log.Println(err)
+
+	if err != nil{
+		http.Error(w, "Could not get all users", http.StatusInternalServerError)
+		return
+	}
+
+	helpers.WriteJSON(w, http.StatusOK, user, nil)
+}
