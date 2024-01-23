@@ -59,6 +59,8 @@ func NewDatabaseConnection(driver string, dsn string) (*sql.DB, error){
 
 func CreateTables() error {
 	createUsersTable := `
+		CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 		CREATE TABLE IF NOT EXISTS users (
 			id uuid DEFAULT uuid_generate_v4() NOT NULL,
 			email text NOT NULL,
