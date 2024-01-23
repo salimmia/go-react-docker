@@ -24,6 +24,51 @@ func NewPostgreSqlDbRepo(app *application.Application, db *sql.DB) repository.Da
 	}
 }
 
+func (app *PostgresRepo) GetAllUsers() ([]models.User, error){
+	ctx, cancel:= context.WithTimeout(context.Background(), 3 * time.Second)
+	defer cancel()
+
+	var users []models.User
+
+	query := `
+		SELECT u.id, u.first_name, u.last_name, p.phone_number, p.birth_date, u.email, u.thumbnail, u.created_at FROM users u
+		JOIN user_profile p ON(u.id = p.user_id);
+	`
+
+	rows, err := app.DB.QueryContext(ctx, query)
+
+	if err != nil{
+		return nil, err
+	}
+
+	for rows.Next(){
+		var user models.User
+	
+		err := rows.Scan(
+			&user.ID,
+			&user.FirstName,
+			&user.LastName,
+			&user.Profile.PhoneNumber,
+			&user.Profile.BirthDate,
+			&user.Email,
+			&user.Thumbnail,
+			&user.CreatedAt,
+		)
+		
+		if err != nil{
+			return nil, err
+		}
+
+		users = append(users, user)
+	}
+
+	if err := rows.Err(); err != nil {
+        return nil, err
+    }
+
+	return users, nil
+}
+
 func (app *PostgresRepo) RegistrationUser(user *models.User) (*models.UserID, error){
 	ctx, cancel:= context.WithTimeout(context.Background(), 3 * time.Second)
 	defer cancel()
@@ -87,7 +132,7 @@ func (app *PostgresRepo) GetUserById(userId uuid.UUID) (*models.User, error){
 		&userProfile.ID,
 		&userProfile.UserID,
 		&userProfile.PhoneNumber,
-		&userProfile.BirthDate.Time,
+		&userProfile.BirthDate,
 	)
 
 	if err != nil {
@@ -200,7 +245,7 @@ func (app *PostgresRepo) UpdateUser(user *models.User) (*models.User, error){
 		&newProfile.ID, 
 		&newProfile.UserID, 
 		&newProfile.PhoneNumber, 
-		&newProfile.BirthDate.Time,
+		&newProfile.BirthDate,
 	)
 
 	if err != nil{

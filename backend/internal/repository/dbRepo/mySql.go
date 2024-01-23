@@ -24,6 +24,12 @@ func NewMySqlDbRepo(app *application.Application, db *sql.DB) repository.Databas
 	}
 }
 
+func (app *mySqlDbRepo) GetAllUsers() ([]models.User, error){
+	var users []models.User
+
+	return users, nil
+}
+
 func (app *mySqlDbRepo) RegistrationUser(user *models.User) (*models.UserID, error){
 	ctx, cancel:= context.WithTimeout(context.Background(), 3 * time.Second)
 	defer cancel()
@@ -87,7 +93,7 @@ func (app *mySqlDbRepo) GetUserById(userId uuid.UUID) (*models.User, error){
 		&userProfile.ID,
 		&userProfile.UserID,
 		&userProfile.PhoneNumber,
-		&userProfile.BirthDate.Time,
+		&userProfile.BirthDate,
 	)
 
 	if err != nil {
@@ -134,7 +140,7 @@ func (app *mySqlDbRepo) GetUserByEmail(email string) (*models.User, error){
 		&userProfile.ID,
 		&userProfile.UserID,
 		&userProfile.PhoneNumber,
-		&userProfile.BirthDate.Time,
+		&userProfile.BirthDate,
 	)
 
 	if err != nil {
@@ -196,11 +202,11 @@ func (app *mySqlDbRepo) UpdateUser(user *models.User) (*models.User, error){
 			user_id = $3
 		RETURNING id, user_id, phone_number, birth_date;
 	`
-	err = app.DB.QueryRowContext(ctx, query_user_profile, user.Profile.PhoneNumber, user.Profile.BirthDate.Time, user.Profile.UserID).Scan(
+	err = app.DB.QueryRowContext(ctx, query_user_profile, user.Profile.PhoneNumber, user.Profile.BirthDate, user.Profile.UserID).Scan(
 		&newProfile.ID, 
 		&newProfile.UserID, 
 		&newProfile.PhoneNumber, 
-		&newProfile.BirthDate.Time,
+		&newProfile.BirthDate,
 	)
 
 	if err != nil{

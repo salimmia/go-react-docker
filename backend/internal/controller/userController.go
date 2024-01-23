@@ -70,21 +70,24 @@ func (m *Repository) UpdateUser(w http.ResponseWriter, r *http.Request){
 	
 	userId.Id = id
 	db_user, err := m.DB.GetUserById(userId.Id)
+	// log.Println(db_user)
 	if err != nil {
 		http.Error(w, "Errors", http.StatusInternalServerError)
 		return
 	}
 
 	var input struct {
-		FirstName   *string        `json:"first_name"`
-		LastName    *string        `json:"last_name"`
-		Thumbnail   *string        `json:"thumbnail"`
-		PhoneNumber *string        `json:"phone_number"`
-		BirthDate   types.NullTime `json:"birth_date"`
+		FirstName   *string        	`json:"first_name"`
+		LastName    *string        	`json:"last_name"`
+		Thumbnail   *string        	`json:"thumbnail"`
+		PhoneNumber *string        	`json:"phone_number"`
+		BirthDate   types.NullTime 	`json:"birth_date"`
 	}
 
 	err = helpers.ReadJSON(w, r, &input)
+	// log.Println(input)
 	if err != nil {
+		// log.Println(err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -102,16 +105,19 @@ func (m *Repository) UpdateUser(w http.ResponseWriter, r *http.Request){
 		db_user.Profile.PhoneNumber = input.PhoneNumber
 	}
 	if input.BirthDate.Valid {
+		db_user.Profile.BirthDate.Valid = true
 		db_user.Profile.BirthDate.Time = input.BirthDate.Time
 	}
 
 	update_user, err := m.DB.UpdateUser(db_user)
+	
 	if err != nil{
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	err = helpers.WriteJSON(w, http.StatusOK, update_user, nil)
+	err = helpers.WriteJSON(w, http.StatusOK, update_user, w.Header())
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -148,4 +154,17 @@ func (m *Repository) LogIn(w http.ResponseWriter, r *http.Request){
 	}
 
 	helpers.WriteJSON(w, http.StatusOK, "Logged in susseccfully!", nil)
+}
+
+func (m *Repository) Users(w http.ResponseWriter, r *http.Request){
+	users, err := m.DB.GetAllUsers()
+
+	// log.Println(err)
+
+	if err != nil{
+		http.Error(w, "Could not get all users", http.StatusInternalServerError)
+		return
+	}
+
+	helpers.WriteJSON(w, http.StatusOK, users, nil)
 }

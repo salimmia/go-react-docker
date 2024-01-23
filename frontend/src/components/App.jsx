@@ -8,10 +8,10 @@ function App() {
     <div style={{ marginTop: "-3.5rem" }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Register />} />
+          {/* <Route path="/" element={<Register />} /> */}
+          <Route path="/" element={<Home />} />
           <Route path="/users/register" element={<Register />} />
           <Route path="/users/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -19,9 +19,10 @@ const Login = () => {
         { withCredentials: true }
       )
       .then((result) => {
+        console.log(result);
         if (result.data === "Logged in susseccfully!") {
           // console.log("Login Success");
-          alert("Login successful!");
+          // alert("Login successful!");
           navigate("/");
         } else {
           alert("Incorrect password! Please try again.");

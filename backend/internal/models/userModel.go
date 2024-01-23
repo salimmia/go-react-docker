@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/go-pg/pg/types"
 	"github.com/google/uuid"
+	"github.com/salimmia/go-architecture/internal/types"
 )
 
 type UserProfile struct {

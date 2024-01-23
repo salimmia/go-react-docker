@@ -7,6 +7,9 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
+
+	"github.com/lib/pq"
 )
 
 func BindJSON(w http.ResponseWriter, response interface{}) error {
@@ -112,4 +115,20 @@ func RespondWithJSON(w http.ResponseWriter, statusCode int, message string) {
     response := map[string]string{"message": message}
 
     json.NewEncoder(w).Encode(response)
+}
+
+// ConvertNullTimeToTime converts pq.NullTime to time.Time
+func ConvertNullTimeToTime(nullTime pq.NullTime) time.Time {
+	if nullTime.Valid {
+		return nullTime.Time
+	}
+	return time.Time{} // Or any default value you prefer for invalid time
+}
+
+// ConvertTimeToNullTime converts time.Time to pq.NullTime
+func ConvertTimeToNullTime(t time.Time) pq.NullTime {
+	return pq.NullTime{
+		Time:  t,
+		Valid: !t.IsZero(),
+	}
 }
